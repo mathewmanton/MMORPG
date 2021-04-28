@@ -58,3 +58,7 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+MMORPG/Library/
+MMORPG/Logs/
+MMORPG/obj/
+MMORPG/UserSettings/
