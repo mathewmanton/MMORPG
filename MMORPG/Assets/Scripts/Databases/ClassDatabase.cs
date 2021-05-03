@@ -3,7 +3,7 @@
 
 public class ClassDatabase
 {
-    private List<PlayerClass> playerClasses;
+    private readonly List<PlayerClass> playerClasses;
 
     public ClassDatabase()
     {
