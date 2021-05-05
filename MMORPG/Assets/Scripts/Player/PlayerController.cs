@@ -7,6 +7,7 @@ public class PlayerController : NetworkBehaviour
     public GamePlayer _player;
     public float turnSpeed;
     public float mouseSensitivity = 20f;
+    public GameObject minimapCamera;
 
     private Rigidbody _playerRigidBody;
     private float _moveX;
@@ -18,6 +19,7 @@ public class PlayerController : NetworkBehaviour
 
     public override void OnStartLocalPlayer()
     {
+        Instantiate<GameObject>(minimapCamera);
         _playerRigidBody = GetComponent<Rigidbody>();
     }
 
