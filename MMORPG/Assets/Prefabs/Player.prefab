@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 2129675095034611567}
   - component: {fileID: 7855350034690826059}
   - component: {fileID: 7654388451682412842}
+  - component: {fileID: 3477950615294817258}
+  - component: {fileID: 7589322154998247214}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -174,6 +176,41 @@ MonoBehaviour:
   turnSpeed: 40
   mouseSensitivity: 20
   minimapCamera: {fileID: 6990118324055962071, guid: 1fc136276d8055b40a62d11755ce4e5f, type: 3}
+--- !u!114 &3477950615294817258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6823807441186700162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24950d499fda91645baedae1ada26a60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 2
+  race: 0
+  faction: 0
+  playerClass: 0
+  playerName: 
+  speed: 0
+--- !u!114 &7589322154998247214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6823807441186700162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2851b9cc7b001244188bb97d3eb55d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 1
+  syncInterval: 0
+  width: 5
+  height: 5
 --- !u!1 &6823807442216343872
 GameObject:
   m_ObjectHideFlags: 0

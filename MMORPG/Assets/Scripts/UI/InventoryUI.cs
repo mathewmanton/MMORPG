@@ -29,7 +29,7 @@ public class InventoryUI : MonoBehaviour
     {
         if (playerInventory != null)
         {
-            text.text = playerInventory.inventory.remainingSlots.ToString();
+            text.text = playerInventory.inventory.RemainingSlots().ToString();
         }
     }
 }

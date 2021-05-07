@@ -4,7 +4,6 @@ using UnityEngine;
 public class PlayerController : NetworkBehaviour
 {
     public float playerSpeed = 5f;
-    public GamePlayer _player;
     public float turnSpeed;
     public float mouseSensitivity = 20f;
     public GameObject minimapCamera;
@@ -13,6 +12,8 @@ public class PlayerController : NetworkBehaviour
     private float _moveX;
     private float _moveZ;
     private float _mouseX;
+    private GamePlayer _player;
+    private Inventory _inventory;
 
 
 
@@ -21,6 +22,9 @@ public class PlayerController : NetworkBehaviour
     {
         Instantiate<GameObject>(minimapCamera);
         _playerRigidBody = GetComponent<Rigidbody>();
+        _player = GetComponent<GamePlayer>();
+        _inventory = GetComponent<Inventory>();
+        _inventory.SetupInventory();
     }
 
     // Update is called once per frame
@@ -39,13 +43,13 @@ public class PlayerController : NetworkBehaviour
 
     public void PlayerMove()
     {
-        _moveX = Input.GetAxis("Horizontal");
         _moveZ = Input.GetAxis("Vertical");
-        transform.Translate(Vector3.forward * Time.deltaTime * playerSpeed * _moveZ);
+        transform.Translate(Vector3.forward * Time.deltaTime * _player.speed * _moveZ);
     }
 
     public void RotatePlayer()
     {
+        _moveX = Input.GetAxis("Horizontal");
         transform.Rotate(Vector3.up, Time.deltaTime * turnSpeed * _moveX);
     }
 

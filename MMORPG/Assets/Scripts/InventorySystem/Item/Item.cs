@@ -12,7 +12,7 @@ public class Item
     public ItemType ItemType;
     public int maxQuantity;
 
-    //First int = Gold, Second = Silver, Third = Copper
+    //
     public int sellPrice; 
 
     public Item()
@@ -27,5 +27,15 @@ public class Item
         description = item.description;
         sellPrice = item.sellPrice;
         maxQuantity = item.maxQuantity;
+    }
+
+    public Item(int id, string name, string description, ItemType type, int maxQuantity, int sellPrice)
+    {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        ItemType = type;
+        this.maxQuantity = maxQuantity;
+        this.sellPrice = sellPrice;
     }
 }

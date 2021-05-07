@@ -1,5 +1,4 @@
-﻿[System.Serializable]
-public class InventorySlot
+﻿public class InventorySlot
 {
     public int slotId;
     public Item item;
@@ -12,11 +11,13 @@ public class InventorySlot
         this.amount = amount;
     }
 
-    /// <summary>
-    /// Add more quantity to the stack
-    /// </summary>
-    /// <param name="amount"></param>
-    /// <returns>Any remainder of the item</returns>
+    public InventorySlot()
+    {
+        slotId = 0;
+        item = null;
+        amount = 0;
+    }
+
     public int AddAmount(int amount)
     {
         int newAmount = 0;

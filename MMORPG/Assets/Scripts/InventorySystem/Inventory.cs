@@ -1,50 +1,55 @@
-﻿using System.Collections.Generic;
+﻿using Mirror;
 
-public class Inventory
+public class Inventory : NetworkBehaviour
 {
-    public int maxSize;
-    public int remainingSlots;
-    public List<InventorySlot> slots;
+    public int width;
+    public int height;
 
-    public Inventory(int size)
+    private SyncList<InventorySlot> slots = new SyncList<InventorySlot>();
+    private int maxSize;
+
+    private void Awake()
     {
-        maxSize = size;
-        slots = new List<InventorySlot>();
-        SetupInventory();
-        remainingSlots = RemainingSlots();
+        maxSize = width * height;
     }
 
-    /// <summary>
-    /// Add an item to the inventory or increase quantity of an existing item
-    /// </summary>
-    /// <param name="item"></param>
-    /// <param name="amount"></param>
-    public int AddItem(Item item, int amount)
+    [Command]
+    public void CmdAddItem(Item item, int amount)
     {
         int newAmount = amount;
 
-        //Find an empty slot to insert item or an exisiting slot that has the same item already to increase it's quantity.
         foreach(InventorySlot slot in slots)
         {
-            if (slot.item.id != item.id)
+            if(slot.item != null && slot.item.id == item.id)
+            {
+                newAmount = slot.AddAmount(newAmount);
+
+                if(newAmount == 0)
+                {
+                    return;
+                }
+            }
+        }
+
+        //if any is left then find a spot where there is no item and add the rest there
+        foreach(InventorySlot slot in slots)
+        {
+            if(slot.item == null)
             {
                 slot.item = item;
                 newAmount = slot.AddAmount(newAmount);
             }
-            else
-            {
-                newAmount = slot.AddAmount(newAmount);
-            }
 
-            //if the amount runs, break. No quantity of the item is left to put into the inventory.
             if(newAmount == 0)
             {
-                break;
+                return;
             }
         }
 
-        return newAmount;
+        //There is some left over and backpack is full
+        //do something here.
     }
+
 
     public void RemoveItem()
     {
@@ -60,10 +65,6 @@ public class Inventory
 
     }
 
-    /// <summary>
-    /// Count how many slots are empty
-    /// </summary>
-    /// <returns>Remaining slots available</returns>
     public int RemainingSlots()
     {
         int remainingSlots = 0;
@@ -79,7 +80,8 @@ public class Inventory
         return remainingSlots;
     }
 
-    private void SetupInventory()
+    [Command]
+    public void SetupInventory()
     {
         for(int i = 0; i < maxSize; i++)
         {
