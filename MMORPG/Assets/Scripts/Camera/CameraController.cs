@@ -2,7 +2,6 @@
 
 public class CameraController : MonoBehaviour
 {
-    public Transform target;
 
     public float targetHeight = 1.7f;
     public float distance = 5.0f;
@@ -30,6 +29,8 @@ public class CameraController : MonoBehaviour
     private float currentDistance;
     private float desiredDistance;
     private float correctedDistance;
+    private Transform _target;
+
 
     void Start()
     {
@@ -54,7 +55,7 @@ public class CameraController : MonoBehaviour
         Vector3 vTargetOffset;
 
         // Don't do anything if target is not defined
-        if (!target)
+        if (!_target)
             return;
 
         // If either mouse buttons are down, let the mouse govern camera position
@@ -69,7 +70,7 @@ public class CameraController : MonoBehaviour
             // otherwise, ease behind the target if any of the directional keys are pressed
             else if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
             {
-                float targetRotationAngle = target.eulerAngles.y;
+                float targetRotationAngle = _target.eulerAngles.y;
                 float currentRotationAngle = transform.eulerAngles.y;
                 xDeg = Mathf.LerpAngle(currentRotationAngle, targetRotationAngle, rotationDampening * Time.deltaTime);
             }
@@ -88,11 +89,11 @@ public class CameraController : MonoBehaviour
 
         // calculate desired camera position
         vTargetOffset = new Vector3(0, -targetHeight, 0);
-        Vector3 position = target.position - (rotation * Vector3.forward * desiredDistance + vTargetOffset);
+        Vector3 position = _target.position - (rotation * Vector3.forward * desiredDistance + vTargetOffset);
 
         // check for collision using the true target's desired registration point as set by user using height
         RaycastHit collisionHit;
-        Vector3 trueTargetPosition = new Vector3(target.position.x, target.position.y, target.position.z) - vTargetOffset;
+        Vector3 trueTargetPosition = new Vector3(_target.position.x, _target.position.y, _target.position.z) - vTargetOffset;
 
         // if there was a collision, correct the camera position and calculate the corrected distance
         bool isCorrected = false;
@@ -113,10 +114,15 @@ public class CameraController : MonoBehaviour
         currentDistance = Mathf.Clamp(currentDistance, minDistance, maxDistance);
 
         // recalculate position based on the new currentDistance
-        position = target.position - (rotation * Vector3.forward * currentDistance + vTargetOffset);
+        position = _target.position - (rotation * Vector3.forward * currentDistance + vTargetOffset);
 
         transform.rotation = rotation;
         transform.position = position;
+    }
+
+    public void SetTarget(Transform target)
+    {
+        _target = target;
     }
 
     private static float ClampAngle(float angle, float min, float max)

@@ -6,25 +6,26 @@ public class PlayerController : NetworkBehaviour
     public float playerSpeed = 5f;
     public float turnSpeed;
     public float mouseSensitivity = 20f;
-    public GameObject minimapCamera;
 
+    private GameObject _minimapCamera;
     private Rigidbody _playerRigidBody;
     private float _moveX;
     private float _moveZ;
     private float _mouseX;
     private GamePlayer _player;
     private Inventory _inventory;
-
-
-
+    private CameraController _mainCamera;
 
     public override void OnStartLocalPlayer()
     {
-        Instantiate<GameObject>(minimapCamera);
+        _minimapCamera = GameObject.FindGameObjectWithTag("MinimapCameera");
+        _mainCamera = Camera.main.GetComponent<CameraController>();
         _playerRigidBody = GetComponent<Rigidbody>();
         _player = GetComponent<GamePlayer>();
         _inventory = GetComponent<Inventory>();
+
         _inventory.SetupInventory();
+        _mainCamera.SetTarget(transform);
     }
 
     // Update is called once per frame
